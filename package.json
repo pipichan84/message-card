@@ -6,10 +6,16 @@
   "description": "OpenAI APIを使った個人用メッセージカード作成サービス",
   "scripts": {
     "start": "node server.mjs",
-    "build": "npm run check",
-    "check": "node --check server.mjs && node --check public/app.js && node --check lib/card-service.mjs && node --check lib/http-security.mjs && node --check api/status.mjs && node --check api/generate.mjs"
+    "build": "pnpm run check",
+    "check": "node --check server.mjs && node --check public/app.js && node --check lib/card-service.mjs && node --check lib/http-security.mjs && node --check lib/rate-limit.mjs && node --check api/status.mjs && node --check api/generate.mjs",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "@upstash/ratelimit": "^2.2.0",
+    "@upstash/redis": "^1.39.0",
+    "@vercel/functions": "^3.9.9"
   }
 }

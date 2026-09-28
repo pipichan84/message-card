@@ -19,6 +19,7 @@ const downloadButton = document.querySelector("#download-button");
 
 let csrfToken = "";
 let apiConfigured = false;
+let configurationMessage = "";
 let currentCard = null;
 
 initialize();
@@ -29,6 +30,9 @@ async function initialize() {
     const status = await response.json();
     csrfToken = status.csrfToken || "";
     apiConfigured = Boolean(status.configured);
+    configurationMessage = status.apiConfigured && status.rateLimitConfigured === false
+      ? "利用回数制限の設定が未完了です。管理者がVercelのUpstash Redis接続を設定してください。"
+      : "サーバー側の環境変数 OPENAI_API_KEY を設定すると作成できます。";
     renderApiStatus();
   } catch {
     apiStatus.className = "status is-missing";
@@ -42,7 +46,7 @@ function renderApiStatus() {
   apiStatus.lastElementChild.textContent = apiConfigured ? "API設定済み" : "APIキー未設定";
   generateButton.disabled = !apiConfigured;
   if (!apiConfigured) {
-    showMessage("サーバー側の環境変数 OPENAI_API_KEY を設定すると作成できます。", "info");
+    showMessage(configurationMessage, "info");
   }
 }
 
@@ -76,6 +80,9 @@ form.addEventListener("submit", async (event) => {
     });
 
     const data = await response.json().catch(() => ({}));
+    if (response.status === 429) {
+      throw new Error(data.error || "利用回数の上限に達しました。しばらくしてからもう一度お試しください。");
+    }
     if (!response.ok) throw new Error(data.error || "カードを作成できませんでした。");
     renderCard(data.card);
     showMessage("カードができました。ことばは下の欄から編集できます。", "info");
