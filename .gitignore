@@ -1,0 +1,13 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Runtime / editor files
+node_modules/
+npm-debug.log*
+.vercel/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

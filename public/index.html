@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="キーワードから、かわいいイラスト入りのメッセージカードを作成します。" />
+    <title>カードのアトリエ</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="カードのアトリエ ホーム">
+        <span class="brand-mark" aria-hidden="true">✉</span>
+        <span>カードのアトリエ</span>
+      </a>
+      <div id="api-status" class="status" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>設定を確認中</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="control-panel" aria-labelledby="create-title">
+        <div class="eyebrow"><span>01</span> CARD BRIEF</div>
+        <h1 id="create-title">送りたい気持は、<br /><em>ひとこと</em>で十分。</h1>
+        <p class="intro">キーワードに似合うことばと、オリジナルのかわいいイラストをAIがひとつのカードにまとめます。</p>
+
+        <form id="card-form" novalidate>
+          <label class="field field-primary" for="keyword">
+            <span>キーワード <b>必須</b></span>
+            <input id="keyword" name="keyword" maxlength="80" required placeholder="例：誕生日、新しい挑戦、ありがとう" autocomplete="off" />
+          </label>
+
+          <div class="field-row">
+            <label class="field" for="recipient">
+              <span>送る相手 <small>任意</small></span>
+              <input id="recipient" name="recipient" maxlength="40" placeholder="例：なおさん" autocomplete="off" />
+            </label>
+            <label class="field" for="mood">
+              <span>雰囲気</span>
+              <select id="mood" name="mood">
+                <option value="おまかせ">おまかせ</option>
+                <option value="やさしい">やさしい</option>
+                <option value="元気">元気</option>
+                <option value="大人かわいい">大人かわいい</option>
+              </select>
+            </label>
+          </div>
+
+          <button class="generate-button" type="submit" id="generate-button">
+            <span class="button-label">
+              <span class="spark" aria-hidden="true">✦</span>
+              <span id="generate-label">カードを作る</span>
+            </span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+          <p id="form-message" class="form-message" role="alert" aria-live="polite"></p>
+        </form>
+
+        <div class="privacy-note">
+          <span aria-hidden="true">◆</span>
+          <p><strong>APIキーはブラウザーに送られません。</strong><br />サーバー側の環境変数からのみ読みます。カード作成時は、入力したキーワードと送る相手の情報がOpenAI APIへ送信されます。</p>
+        </div>
+      </section>
+
+      <section class="preview-panel" aria-labelledby="preview-title">
+        <div class="preview-head">
+          <div>
+            <div class="eyebrow eyebrow-light"><span>02</span> PREVIEW</div>
+            <h2 id="preview-title">できあがり</h2>
+          </div>
+          <button id="download-button" class="download-button" type="button" disabled>
+            <span aria-hidden="true">↓</span> PNGで保存
+          </button>
+        </div>
+
+        <div class="preview-stage">
+          <article id="card-preview" class="card-preview" aria-live="polite">
+            <div class="card-image-wrap">
+              <img id="card-image" alt="" hidden />
+              <div id="card-placeholder" class="card-placeholder">
+                <span class="placeholder-icon" aria-hidden="true">✿</span>
+                <p>ここにあなただけの<br />カードが生まれます</p>
+              </div>
+              <div id="loading-art" class="loading-art" hidden aria-hidden="true">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+            <div class="card-copy">
+              <span class="card-mini-label">FOR YOUR SPECIAL MOMENT</span>
+              <h3 id="card-title">想いを、カードに。</h3>
+              <p id="card-message">キーワードを入れて、カードを作ってみましょう。</p>
+              <span class="card-sign">MADE WITH CARE</span>
+            </div>
+          </article>
+        </div>
+
+        <div id="edit-fields" class="edit-fields" hidden>
+          <label for="edit-title">見出し</label>
+          <input id="edit-title" maxlength="28" />
+          <label for="edit-message">メッセージ</label>
+          <textarea id="edit-message" rows="3" maxlength="140"></textarea>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>PERSONAL STUDIO</span>
+      <p>生成にはOpenAI APIの利用料がかかります。キーは共有しないでください。</p>
+    </footer>
+  </body>
+</html>
