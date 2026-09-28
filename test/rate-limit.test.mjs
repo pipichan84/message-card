@@ -45,7 +45,15 @@ test("Redis接続はURLとトークンの両方がある場合だけ設定済み
   assert.equal(isRateLimitConfigured({ UPSTASH_REDIS_REST_URL: "https://example.test" }), false);
   assert.equal(isRateLimitConfigured({
     UPSTASH_REDIS_REST_URL: "https://example.test",
+    KV_REST_API_TOKEN: "test-token",
+  }), false);
+  assert.equal(isRateLimitConfigured({
+    UPSTASH_REDIS_REST_URL: "https://example.test",
     UPSTASH_REDIS_REST_TOKEN: "test-token",
+  }), true);
+  assert.equal(isRateLimitConfigured({
+    KV_REST_API_URL: "https://example.test",
+    KV_REST_API_TOKEN: "test-token",
   }), true);
 });
 

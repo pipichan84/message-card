@@ -30,7 +30,7 @@ node server.mjs
 1. このフォルダーをGitリポジトリへ追加します。`.env` はコミットしないでください。
 2. Vercelで **Add New → Project** を開き、そのリポジトリをImportします。
 3. **Settings → Environment Variables** で `OPENAI_API_KEY` を追加します。値はVercelの画面にだけ入力し、ソースコードには書きません。
-4. Vercel Marketplaceから **Upstash** を追加し、Redisデータベースをこのプロジェクトへ接続します。接続すると `UPSTASH_REDIS_REST_URL` と `UPSTASH_REDIS_REST_TOKEN` が環境変数として自動設定されます。値をコピーしてコードやGitへ入れないでください。
+4. Vercel Marketplaceから **Upstash** を追加し、Redisデータベースをこのプロジェクトへ接続します。接続方法により、`UPSTASH_REDIS_REST_URL`と`UPSTASH_REDIS_REST_TOKEN`、または`KV_REST_API_URL`と`KV_REST_API_TOKEN`が環境変数として自動設定されます。値をコピーしてコードやGitへ入れないでください。
 5. 必要なら `OPENAI_TEXT_MODEL` と `OPENAI_IMAGE_MODEL` も同じ画面で設定します。未設定なら既定値を使用します。
 6. Deployします。環境変数を後から変更した場合は、変更後に再デプロイしてください。
 
